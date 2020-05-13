@@ -1,0 +1,4 @@
+aliyun_python_sdk_alidns==2.0.18
+tldextract==2.2.2
+aliyun_python_sdk_core==2.13.16
+aliyun_python_sdk_slb==3.2.16
