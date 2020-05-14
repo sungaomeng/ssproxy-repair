@@ -88,3 +88,26 @@ def UpdateDNS(access_key_id, access_key_secret, host, old_host_ip, new_load_bala
     # print (subdomain_record_id)
     UpdateDomainRecord(access_key_id, access_key_secret, subdomain_record_id, subdomain_name, new_load_balancer_ip)
     print("DNS update record successful domain:%s, old ip:%s, new ip:%s " % (host, old_host_ip, new_load_balancer_ip))
+
+def UpdateHosts(new_load_balancer_ip, host):
+    """
+    更新本地Hosts, 防止DNS更新不及时导致一直检测旧IP
+    :param new_load_balancer_ip:
+    :param host:
+    :return:
+    """
+
+    with open("/etc/hosts", "r", encoding="utf-8") as f:
+        lines = f.readlines()
+        f.close()
+        # print(lines)
+
+    with open("/etc/hosts", "w", encoding="utf-8") as f_w:
+        for line in lines:
+            if host in line:
+                f_w.write("%s %s\n" % (new_load_balancer_ip, host))
+                print("Hosts update record successful domain:%s, new ip:%s " % (host, new_load_balancer_ip))
+                continue
+
+            f_w.write(line)
+        f_w.close()

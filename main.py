@@ -73,6 +73,9 @@ if 0 == result:
     # 去DNS里更新A记录
     dns.UpdateDNS(access_key_id, access_key_secret, host, host_ip, new_load_balancer_ip)
 
+    # 更新本地Hosts, 防止DNS更新不及时导致一直检测旧IP
+    dns.UpdateHosts(new_load_balancer_ip, host)
+
 else:
     print("New LoadBalancer:%s Port:%s is not open，return code：%s" % (new_load_balancer_ip, port, result))
 
