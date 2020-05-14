@@ -42,10 +42,13 @@
 ### 使用
 
 ``` bash
-git clone https://github.com/sungaomeng/ssproxy-repair.git
-pip install -r ssproxy-repair/requirements.txt
+$ git clone https://github.com/sungaomeng/ssproxy-repair.git
+$ pip install -r ssproxy-repair/requirements.txt
 
-echo "30/* * * * * python ~/ssproxy-repair/main.py" >> /var/spool/$User
+# 校时
+$ echo "* * * * * /usr/sbin/ntpdate ntp.aliyun.com" >> /var/spool/$User
+# 每半小时执行一次检查
+$ echo "*/30 * * * * /usr/bin/python /root/ssproxy-repair/main.py >> /tmp/ssproxy-repair.log 2>&1" >> /var/spool/$User
 ```
 
 ### 日志
